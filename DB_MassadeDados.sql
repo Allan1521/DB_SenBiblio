@@ -43,6 +43,24 @@ INSERT INTO autores(nomeAutor)
 VALUES 	('Suzanne Collins'),  
 			('Mauricio de Sousa'),  
 			('Stephenie Meyer');
+		
+INSERT INTO autores(nomeAutor) 
+
+VALUES ('Barry Burd'),
+
+       ('Stendhal'),
+
+       ('Jojo Moyes'), 
+
+       ('Flávio Lisboa'), 
+
+       ('Jennifer Saint'), 
+
+       ('Thrity Umrigar'), 
+
+       ('Bill Gates'), 
+
+       ('Linus Torvalds');
 
 SELECT * FROM autores
 
@@ -54,14 +72,15 @@ SELECT * FROM livros;
 
 INSERT INTO livros (nome, sinopse, isbn, qtdPaginas, edicao, idEditora) 
 
-VALUES ('Java para Leigos', 'do basico ao avançado da linguagem', '9028017029981', 150, '2a', 3), 
+VALUES 
+('Java para Leigos', 'do basico ao avançado da linguagem', '9028017029981', 150, '2a', 3), 
 ('A cartuxa de Parma', '', '4921029442771', 325, '1a', 1),
 ('A casa das marés', '', '3321059442771', 256, '1a', 1), 
 ('PHP avançado', 'avançado da linguagem PHP', '4923029562771', 475, '3a', 2),
 ('A hospedeira', '', '8923029062779', 280, '7a', 4), 
 ('Ariadne', 'Igual a Irene Idler de S. Holmes', '9923029422779', 512, '1a', 2), 
 ('A distância entre nós', '', '9927008422779', 200, '5a', 3), 
-('Bill Gates', 'Historia do Bill Gates', '3783022422779', 156, '1a', 4), 
+('Bill Gates', 'Historia do Bill Gates', '3783022422779', 156, '1a', 4), autoreslivros
 ('Criador do Linux', 'Historia do Linus Torvalds', '37830213224799', 159, '1a', 3), 
 ('A cantiga dos pássaros e das serpentes', 'aves e cobras?', '76829113224799', 156, '3a', 2); 
 
@@ -116,15 +135,40 @@ VALUES 	('20-05-06', '20-05-10', '1', '2'),
 
  SELECT * FROM Emprestimos
  
+autoreslivros
+
+INSERT INTO autoreslivros (idAutor,idLivros) 
+VALUES ('3','10'),('2','5');
+
+INSERT INTO autoreslivros (idAutor,idLivros) 
+VALUES('4','1'),
+		('5','2'),
+		('6','3'),
+		('7','4'),
+		('3','5'),
+		('8','6'),
+		('9','7'),
+		('10','8'),
+		('11','9'),
+		('1','10');
+		
+INSERT INTO autoreslivros (idAutor,idLivro) 
+VALUES ('3','10'),
+		('2','5');
+
+ SELECT * FROM autoreslivros
+ 
+ 
  emprestimoslivros 
  
  INSERT INTO emprestimoslivros (idEmprestimo, idLivros, dataDevolucaoEfetiva)
- VALUES ('1', '5', '24-01-11'),
-		 ('2', '10', '20-05-10'),
-		 ('3', '8', '22-08-07'),
-		 ('4', '1', '23-04-12'),
-		 ('5', '4', '24-02-09');
+ VALUES ('1', '5', '24-01-11'),autoreslivros
+		  ('2', '10', '20-05-10'),
+		  ('3', '8', '22-08-07'),
+		  ('4', '1', '23-04-12'),
+		  ('5', '4', '24-02-09');
  
+
 SELECT * FROM emprestimoslivros
 
 MULTAS 
@@ -155,7 +199,18 @@ VALUES
 (10,4);
 
 SELECT * FROM livrosgeneros
- 
+
+tiposcontatos
+INSERT INTO tiposcontatos (nomeContato)
+VALUES
+('Celular'),
+('Residencial'),
+('Comercial'),
+('Recado');
+
+SELECT * FROM tiposcontatos
+
+
  enderecos
  
  INSERT INTO enderecos (idAssociado,logradouro, numero, complemento, bairro, cidade, UF, cep ) 
@@ -173,9 +228,26 @@ SELECT * FROM livrosgeneros
 
 SELECT * FROM enderecos
 
- 
- 
- 
+INSERT INTO tiposcontatos (nomeContato)
+VALUES('Celular'),('Residencial'),('Comercial'),('Recado');
+
+SELECT * FROM tiposcontatos
+
+contatosTelefonicos
+
+INSERT INTO contatosTelefonicos (ddd, numero, idAssociado,idTipoContato) 
+VALUES(13, 987654321, 2,1),
+		(13, 987321654, 1,1),
+		(13, 987654321, 6,1),
+		(13, 36974125, 4,2),
+		(13, 963258741, 3,1),
+		(13, 35712584, 5,3),
+		(13, 917530148, 8,1),
+		(13, 38697225, 7,4),
+		(13, 963257589, 9,1),
+		(13, 35747139, 10,2);
+		
+ SELECT * FROM contatosTelefonicos
  
  
  

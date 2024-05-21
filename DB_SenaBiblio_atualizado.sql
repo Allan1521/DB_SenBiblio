@@ -59,6 +59,17 @@ CONSTRAINT fk_autoresLivros_Autores FOREIGN KEY (idAutor)
 REFERENCES Livros(idlivros)
 );
 
+CREATE TABLE autoresLivros (
+IdAutor INT NOT NULL,
+IdLivro INT NOT NULL,
+CONSTRAINT PRIMARY KEY (idAutor, idLivros),
+CONSTRAINT fk_autoresLivros_Autores FOREIGN KEY (idAutor)
+REFERENCES autores (idAutor),
+CONSTRAINT fk_autoresLivros_Livros FOREIGN KEY (idLivros)
+REFERENCES livros (idLivros)
+);
+
+
 SELECT * FROM autoresLivros
 
 CREATE TABLE Generos(
@@ -111,12 +122,12 @@ REFERENCES Associados(idAssociado)
 CREATE TABLE tiposContatos(
 idTipoContato INT AUTO_INCREMENT NOT NULL,
 nomeContato VARCHAR(20),
-idAssociados INT NOT NULL, 
-idTiposContatos INT NOT NULL,
+/*idAssociados INT NOT NULL, 
+idTiposContatos INT NOT NULL,*/
 CONSTRAINT PRIMARY KEY (idTipoContato)
 );
 
-
+tiposcontatos
 CREATE TABLE contatostelefonicos(
 idContatoTelefonico INT AUTO_INCREMENT NOT NULL,
 numero VARCHAR(9) NOT NULL,
