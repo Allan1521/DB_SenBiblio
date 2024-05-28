@@ -1,19 +1,23 @@
 /*massa de dados*/
-INSERT INTO editoras (nomeEditora) 
+
+INSERT INTO editoras (nomeEditoras) 
 
 VALUES ('Érica'); 
 
-INSERT INTO editoras (nomeEditora) 
+INSERT INTO editoras (nomeEditoras) 
 
 VALUES ('Person'); 
 
-INSERT INTO editoras (nomeEditora) 
+INSERT INTO editoras (nomeEditoras) 
 
 VALUES ('Atlas'); 
 
-INSERT INTO editoras (nomeEditora) 
+INSERT INTO editoras (nomeEditoras) 
 
 VALUES ('FTD'); 
+
+SELECT * FROM editoras
+
 
 /* FORMA REDUZIDA DE INSERT
 
@@ -23,52 +27,36 @@ VALUES 	('Érica'),
 			('Atlas'),
 			('FTD'); */
 
-SELECT * FROM editoras
 
-GENERO 
 
-INSERT INTO genero(nome) VALUES('Romance'); 
+/*GENERO */
 
-INSERT INTO genero(nome) VALUES('Drama'); 
+INSERT INTO generos(nomegenero) VALUES('Romance'); 
 
-INSERT INTO genero(nome) VALUES('Tecnologia'); 
+INSERT INTO generos(nomegenero) VALUES('Drama'); 
 
-INSERT INTO genero(nome) VALUES('Fantasia'); 
+INSERT INTO generos(nomegenero) VALUES('Tecnologia'); 
 
-INSERT INTO genero(nome) VALUES('Biografia'); 
+INSERT INTO generos(nomegenero) VALUES('Fantasia'); 
 
-SELECT * FROM genero
+INSERT INTO generos(nomegenero) VALUES('Biografia'); 
 
-INSERT INTO autores(nomeAutor)  
+SELECT * FROM generos
+
+INSERT INTO autores(nome)  
 VALUES 	('Suzanne Collins'),  
 			('Mauricio de Sousa'),  
 			('Stephenie Meyer');
-		
-INSERT INTO autores(nomeAutor) 
-
-VALUES ('Barry Burd'),
-
-       ('Stendhal'),
-
-       ('Jojo Moyes'), 
-
-       ('Flávio Lisboa'), 
-
-       ('Jennifer Saint'), 
-
-       ('Thrity Umrigar'), 
-
-       ('Bill Gates'), 
-
-       ('Linus Torvalds');
+		   ('Barry Burd'),
+       	('Stendhal'),
+       	('Jojo Moyes'),
+       	('Flávio Lisboa'), 
+       	('Jennifer Saint'),
+      	('Thrity Umrigar'), 
+       	('Bill Gates'), 
+	      ('Linus Torvalds');
 
 SELECT * FROM autores
-
-
-LIVROS 
- 
-SELECT * FROM livros; 
-
 
 INSERT INTO livros (nome, sinopse, isbn, qtdPaginas, edicao, idEditora) 
 
@@ -80,13 +68,15 @@ VALUES
 ('A hospedeira', '', '8923029062779', 280, '7a', 4), 
 ('Ariadne', 'Igual a Irene Idler de S. Holmes', '9923029422779', 512, '1a', 2), 
 ('A distância entre nós', '', '9927008422779', 200, '5a', 3), 
-('Bill Gates', 'Historia do Bill Gates', '3783022422779', 156, '1a', 4), autoreslivros
+('Bill Gates', 'Historia do Bill Gates', '3783022422779', 156, '1a', 4), 
 ('Criador do Linux', 'Historia do Linus Torvalds', '37830213224799', 159, '1a', 3), 
 ('A cantiga dos pássaros e das serpentes', 'aves e cobras?', '76829113224799', 156, '3a', 2); 
 
-Associados
+SELECT * FROM livros; 
 
-INSERT INTO associados (nomeAssociado, cpf) VALUES 
+
+INSERT INTO associados (nomeAssociado, cpf)
+ VALUES 
 ('Anna Sbrahma', '11045652840'),
 ('Arthur Tiengo','20504598758'), 
 ('Allan Matias', '25687942642'),
@@ -100,7 +90,7 @@ INSERT INTO associados (nomeAssociado, cpf) VALUES
 
 SELECT * FROM associados
 
-INSERT INTO emails(email,idAssociado)
+INSERT INTO emails(emailAsso,idAssociado)
 VALUES ('anabrahma@gmail.com', 1),
 ('reiarthur2006@gmail.com',2),
 ('allanMatias@gmail.com', 3),
@@ -114,8 +104,6 @@ VALUES ('anabrahma@gmail.com', 1),
 
 SELECT * FROM emails
 
-FUNCIONARIOS 
-
 INSERT INTO funcionarios (nomeFuncionario, loginFuncionario, senhaFuncionario)  
 
 VALUES 	('Caio Belky', 'Belky23', 'belkyc123'), 
@@ -124,23 +112,23 @@ VALUES 	('Caio Belky', 'Belky23', 'belkyc123'),
 
 SELECT * FROM FUNCIONARIOS
 			 
-Emprestimos
 
-INSERT INTO emprestimos (dataRetirada, dataPrazo, idFuncionario, idAssociado) 
-VALUES 	('20-05-06', '20-05-10', '1', '2'),
- 			('22-08-01', '22-08-07', '2', '4'),
- 			('21-07-01', '22-07-07', '2', '5'),
- 			('22-08-01', '22-08-07', '1', '4'),
- 			('23-04-05', '23-04-12', '3', '6'); 
+INSERT INTO emprestimos (Retirada, Devolucao, idFuncionario, idAssociado) 
+
+VALUES 
+('20-05-06', '20-05-10', '1', '2'),
+('22-08-01', '22-08-07', '2', '4'), ('23-04-05', '23-04-12', '3', '6');
+
+INSERT INTO emprestimos (Retirada, Devolucao, idFuncionario, idAssociado) 
+
+VALUES ('23-02-12', '24-02-12', '2', '10'), ('23-06-04', '23-07-04', '1', '5'), ('24-05-16', '24-06-16', '3', '9');
 
  SELECT * FROM Emprestimos
  
 autoreslivros
 
-INSERT INTO autoreslivros (idAutor,idLivros) 
-VALUES ('3','10'),('2','5');
 
-INSERT INTO autoreslivros (idAutor,idLivros) 
+INSERT INTO autoreslivros (idAutor,idLivro) 
 VALUES('4','1'),
 		('5','2'),
 		('6','3'),
@@ -152,17 +140,15 @@ VALUES('4','1'),
 		('11','9'),
 		('1','10');
 		
-INSERT INTO autoreslivros (idAutor,idLivro) 
-VALUES ('3','10'),
-		('2','5');
 
  SELECT * FROM autoreslivros
  
  
- emprestimoslivros 
+ /*emprestimoslivros*/ 
  
- INSERT INTO emprestimoslivros (idEmprestimo, idLivros, dataDevolucaoEfetiva)
- VALUES ('1', '5', '24-01-11'),autoreslivros
+ INSERT INTO emprestimoslivros 
+ (idEmprestimo, idLivro, dataDevolucaoEfetiva)
+ VALUES ('1', '5', '24-01-11'),
 		  ('2', '10', '20-05-10'),
 		  ('3', '8', '22-08-07'),
 		  ('4', '1', '23-04-12'),
@@ -171,9 +157,9 @@ VALUES ('3','10'),
 
 SELECT * FROM emprestimoslivros
 
-MULTAS 
+/*MULTAS*/ 
 
-INSERT INTO multas (valor, statusMulta, idEmprestimo, idLivros) 
+INSERT INTO multas (valor, statusMultas, idEmprestimo, idLivro) 
 VALUES 
 (5.00, 1, 1, 5), 
 (2.00, 0, 2, 1), 
@@ -200,7 +186,6 @@ VALUES
 
 SELECT * FROM livrosgeneros
 
-tiposcontatos
 INSERT INTO tiposcontatos (nomeContato)
 VALUES
 ('Celular'),
@@ -210,10 +195,8 @@ VALUES
 
 SELECT * FROM tiposcontatos
 
-
- enderecos
- 
- INSERT INTO enderecos (idAssociado,logradouro, numero, complemento, bairro, cidade, UF, cep ) 
+ INSERT INTO enderecos 
+ (idAssociado,logradouro, numero, complemento, bairro, cidade, UF, cep ) 
  VALUES 
 (1 ,'R.Alice Machado',1353, 'casa', 'Naútica', 'São Vicente', 'SP',11330300),
 (2,'Av.Salagdo filho', 205, 'casa','Naútica','São Vicente', 'SP',11340500), 
@@ -228,14 +211,9 @@ SELECT * FROM tiposcontatos
 
 SELECT * FROM enderecos
 
-INSERT INTO tiposcontatos (nomeContato)
-VALUES('Celular'),('Residencial'),('Comercial'),('Recado');
 
-SELECT * FROM tiposcontatos
-
-contatosTelefonicos
-
-INSERT INTO contatosTelefonicos (ddd, numero, idAssociado,idTipoContato) 
+INSERT INTO contatostelefonicos 
+(ddd, numero, idAssociado,idTipoContato) 
 VALUES(13, 987654321, 2,1),
 		(13, 987321654, 1,1),
 		(13, 987654321, 6,1),
@@ -246,8 +224,9 @@ VALUES(13, 987654321, 2,1),
 		(13, 38697225, 7,4),
 		(13, 963257589, 9,1),
 		(13, 35747139, 10,2);
-		
- SELECT * FROM contatosTelefonicos
+
+ 	
+ 	SELECT * FROM contatosTelefonicos
  
  
  

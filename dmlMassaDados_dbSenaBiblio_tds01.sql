@@ -83,18 +83,137 @@ ON autores.idAutor = autoreslivros.idAutor
 INNER JOIN editoras
 ON editoras.idEditora = livros.idEditora
 GROUP BY livros.idlivros
-HAVING COUNT(autores.idAutor)>2
+HAVING COUNT(autoreslivros.idAutor)>2
 
 
 GROUP BY (idlivros)
 
-SELECT * FROM autores
-SELECT * FROM autoreslivros
-SELECT * FROM livros
-SELECT * FROM autoreslivros
-SELECT * FROM 
-
-
 /* Exercício 3 ) Relatório de quantos livros cada autor escreveu
 levando em conta apenas os autores que escreveram mais de 2
 livros. Tudo isto em ordem alfabética por nome do autor*/
+
+
+/*Relatório de quantos livros cada autor escreveu
+levando em conta apenas os autores que escreveram mais de 2
+livros. Tudo isto em ordem alfabética por nome do autor*/
+SELECT * FROM livros
+SELECT * FROM autores
+
+COUNT(autoreslivros.idautor)
+ 
+/* Exercicio: Trazer quantos emprestimos foram realizados por data*/
+ 
+SELECT DATE(Retirada), COUNT(idEmprestimo)
+AS 'Total Emprestimos'
+FROM emprestimos 
+GROUP BY DATE(Retirada)
+ORDER BY Retirada DESC 
+
+
+/*Sumiu um livro na biblioteca e precisamos saber o histórico
+dos emprestimos deste livro. 
+A query deve trazer o nome de quem o emprestou, a data, o nome 
+do funcionario. Escolha um livro para servir como filtro da busca.
+O resultado deve ser mostrado da data mais atual para a mais antiga*/
+
+
+CREATE VIEW vw_EmprestimosPorFuncionarioEAssociado AS 
+SELECT nomefuncionario, Retirada,Devolucao, nomeAssociado
+FROM funcionarios
+INNER JOIN emprestimos
+ON funcionarios.IdFuncionario = emprestimos.idFuncionario
+INNER JOIN associados
+ON associados.idAssociado = emprestimos.idFuncionario
+INNER JOIN emprestimoslivros
+ON emprestimoslivros.idEmprestimo = emprestimos.idEmprestimo
+INNER JOIN livros
+ON emprestimoslivros.idLivro = livros.idLivro
+WHERE nome = 'A cantiga dos passáros e das serpentes'
+ORDER BY Retirada DESC
+
+
+
+CREATE VIEW vw_EmprestimosPorFuncionarioEAssociado AS 
+SELECT nomefuncionario, Retirada,Devolucao, nomeAssociado
+FROM funcionarios
+INNER JOIN emprestimos
+ON funcionarios.IdFuncionario = emprestimos.idFuncionario
+INNER JOIN associados
+ON associados.idAssociado = emprestimos.idFuncionario
+INNER JOIN emprestimoslivros
+ON emprestimoslivros.idEmprestimo = emprestimos.idEmprestimo
+INNER JOIN livros
+ON emprestimoslivros.idLivro = livros.idLivro
+
+
+SELECT * FROM vw_emprestimosporfuncionarioeassociado
+WHERE nomeFuncionario='Maria Silva'
+
+
+/*Criar uma view que traga o nome , o cel eo email dos associados 
+Nome da View-Associados*/
+
+CREATE VIEW vw_AssociadoContatos as
+SELECT nomeAssociado, DDD, numero, emailAsso
+FROM associados 
+INNER JOIN contatostelefonicos
+ON associados.idAssociado = contatostelefonicos.idAssociado
+INNER JOIN emails 
+ON emails.idAssociado = associados.idAssociado
+ 
+SELECT * FROM vw_AssociadoContatos
+
+
+
+
+
+
+/*Stores Procedures - Procedimentos Armazenados*/
+/*Criar uma procedure para inserir uma editora*/
+
+CREATE PROCEDURE pi_Editoras/*pi_ é uma boa prática*/
+(IN nome VARCHAR(30))
+INSERT INTO editoras(nomeeditoras)
+VALUES(nome);
+
+DROP PROCEDURE pi_Editoras
+db_senabiblio
+
+CREATE PROCEDURE pi_Editoras/*pi_ é uma boa prática*/
+(IN nome VARCHAR(30))
+INSERT INTO editoras(nomeeditoras)
+VALUES(nome);
+
+CALL pi_Editoras ('Abril')
+
+DELETE FROM editoras WHERE ideditora>8 /*para excluir qdo for inserido mais de uma vez*/
+
+SELECT * FROM editoras
+
+/*pesquisar sobre SQL Injection*/
+
+
+/*Criar uma procedure que traga quantos empréstimos foram 
+realizados por determinado associado*/
+
+CREATE PROCEDURE pi_Emprestimos
+INSERT INTO Emprestimos(idEmprestimo)
+VALUES(nome);
+
+SELECT * FROM emprestimos
+
+
+
+
+
+
+/*Criar uma produce que traga quantos empréstimos
+ foram realizados por determinado associado por nome*/
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+

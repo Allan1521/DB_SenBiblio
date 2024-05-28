@@ -1,220 +1,176 @@
-/* apagar as tabelas
-DROP TABLE livrosgeneros;
-DROP TABLE emprestimoslivros;
+/*apagar as tabelas dando sequência inicialmente 
+pelas "FK" chaves estrangeiras.
+
 DROP TABLE autoreslivros;
+DROP TABLE livrosgeneros;
+DROP TABLE multas;
+DROP TABLE emprestimoslivros;
 DROP TABLE livros;
 DROP TABLE editoras;
-DROP TABLE multas;
 DROP TABLE emprestimos;
 DROP TABLE funcionarios;
+DROP TABLE enderecos;
+DROP TABLE emails;
+DROP TABLE contatostelefonicos;
 DROP TABLE associados;
-DROP TABLE anderecoassociados;
-DROP TABLE emailsassociados;
-DROP TABLE contatos;
-DROP TABLE tiposcantatostel;
+DROP TABLE tiposcontatos;
 DROP TABLE autores;
-DROP TABLE generos;
-*/
+DROP TABLE genero;*/
 
 
-CREATE TABLE Autores(
+/*Código corrigido pelo o da Sam*/
+CREATE TABLE autores  (
 idAutor INT AUTO_INCREMENT NOT NULL,
-nomeAutor VARCHAR(50) NOT NULL,
-CONSTRAINT PRIMARY KEY(idAutor)
-);
+nome VARCHAR(45) NOT NULL,
+CONSTRAINT PRIMARY KEY (idAutor)
+) ;
 
+SELECT * FROM autores
 
-
-CREATE TABLE Editoras(
+CREATE TABLE editoras ( 
 idEditora INT AUTO_INCREMENT NOT NULL,
-nomeEditora VARCHAR(30) NOT NULL,
-CONSTRAINT PRIMARY KEY(idEditora)
+nomeEditoras VARCHAR (30) NOT NULL,
+CONSTRAINT PRIMARY KEY (idEditora)
 );
 
 SELECT * FROM editoras
 
-
-CREATE TABLE Livros(
-idLivros INT AUTO_INCREMENT NOT NULL,
-nome VARCHAR(50) NOT NULL,
+CREATE TABLE livros (
+idLivro INT AUTO_INCREMENT NOT NULL,
+nome VARCHAR (45) NOT NULL,
 sinopse VARCHAR(150),
 isbn CHAR(13) NOT NULL,
 qtdPaginas INT NOT NULL,
-edicao INT NOT NULL,
+edicao INT,
 idEditora INT NOT NULL,
-CONSTRAINT PRIMARY KEY(idLivros),
-CONSTRAINT fk_livros_editora FOREIGN KEY(idEditora)
-REFERENCES editoras(idEditora)
+CONSTRAINT PRIMARY KEY (idLivro),
+CONSTRAINT Fk_livros_editoras FOREIGN KEY (idEditora)
+REFERENCES Editoras (idEditora)
 );
 
 SELECT * FROM livros
 
-/*para comentários*/
 
-CREATE TABLE autoresLivros(
-idAutor INT NOT NULL,
-idLivros INT NOT NULL,
-CONSTRAINT PRIMARY KEY (idAutor, idlivros),
-CONSTRAINT fk_autoresLivros_Autores FOREIGN KEY (idAutor)
-REFERENCES Livros(idlivros)
+CREATE TABLE generos (
+idGenero INT AUTO_INCREMENT NOT NULL,
+nomeGenero VARCHAR (20) NOT NULL,
+CONSTRAINT PRIMARY KEY (idGenero)
+);
+
+CREATE TABLE livrosGeneros(
+idlivro INT NOT NULL,
+idGenero INT NOT NULL,
+CONSTRAINT PRIMARY KEY (idlivro,idGenero),
+CONSTRAINT fk_livrosGeneros_Generos FOREIGN KEY (idGenero)
+REFERENCES Generos(idGenero),
+CONSTRAINT fk_livrosgenros_Livros FOREIGN KEY (idlivro)
+REFERENCES livros (idlivro)
+);
+
+CREATE TABLE associados (
+idAssociado INT AUTO_INCREMENT NOT NULL,
+nomeAssociado VARCHAR(45) NOT NULL,
+cpf CHAR(11) NOT NULL,
+CONSTRAINT PRIMARY KEY (idAssociado)
+);
+
+CREATE TABLE enderecos (
+idEndereco INT AUTO_INCREMENT NOT NULL,
+logradouro VARCHAR(50) NOT NULL,
+numero VARCHAR(8) NOT NULL,
+complemento VARCHAR (10) NOT NULL,
+bairro VARCHAR(30),
+UF CHAR(2) NOT NULL,
+cidade VARCHAR(50) NOT NULL,
+CEP CHAR(8) NOT NULL,
+IdAssociado INT NOT NULL,
+CONSTRAINT PRIMARY KEY (idEndereco),
+CONSTRAINT FK_enderecos_associados FOREIGN KEY (idAssociado) REFERENCES associados (idAssociado)
+);
+
+CREATE TABLE emails(
+idEmail INT AUTO_INCREMENT NOT NULL,
+emailAsso VARCHAR(50),
+idAssociado INT NOT NULL,
+CONSTRAINT PRIMARY KEY (idEmail),
+CONSTRAINT FK_emails_associados FOREIGN KEY (idAssociado)
+REFERENCES Associados (idAssociado)
+);
+
+CREATE TABLE tiposContatos(
+idTipoContato INT AUTO_INCREMENT NOT NULL,
+nomeContato VARCHAR(45),
+CONSTRAINT PRIMARY KEY (idTipoContato)
+);
+
+CREATE TABLE contatosTelefonicos (
+IdContato INT AUTO_INCREMENT NOT NULL,
+ddd CHAR(2),
+numero VARCHAR(9) NOT NULL,
+idAssociado INT NOT NULL,
+idTipoContato INT NOT NULL,
+CONSTRAINT PRIMARY KEY (idContato),
+CONSTRAINT fk_contatosTelefonicos_tiposContatos FOREIGN KEY (idTipoContato)
+REFERENCES Tiposcontatos (idTipoContato),
+CONSTRAINT fk_contatosTelefonicos_associados FOREIGN KEY (idAssociado)
+REFERENCES Associados (idAssociado)
 );
 
 CREATE TABLE autoresLivros (
 IdAutor INT NOT NULL,
 IdLivro INT NOT NULL,
-CONSTRAINT PRIMARY KEY (idAutor, idLivros),
+CONSTRAINT PRIMARY KEY (idAutor, idLivro),
 CONSTRAINT fk_autoresLivros_Autores FOREIGN KEY (idAutor)
 REFERENCES autores (idAutor),
-CONSTRAINT fk_autoresLivros_Livros FOREIGN KEY (idLivros)
-REFERENCES livros (idLivros)
+CONSTRAINT fk_autoresLivros_Livros FOREIGN KEY (idLivro)
+REFERENCES livros (idLivro)
 );
 
-
-SELECT * FROM autoresLivros
-
-CREATE TABLE Generos(
-idGenero INT AUTO_INCREMENT NOT NULL, 
-nomeGeneros VARCHAR (20) NOT NULL,
-CONSTRAINT PRIMARY KEY (idGenero)
-);
-
-CREATE TABLE livrosGeneros(
-idlivros INT NOT NULL,
-idGenero INT NOT NULL,
-CONSTRAINT PRIMARY KEY (idlivros,idGenero),
-CONSTRAINT fk_livrosGeneros_Generos FOREIGN KEY (idGenero)
-REFERENCES Generos(idGenero),
-CONSTRAINT fk_livrosgenros_Livros FOREIGN KEY (idlivros)
-REFERENCES livros(idlivros)
-);
-
-CREATE TABLE associados (
-idAssociado INT AUTO_INCREMENT NOT NULL,
-nomeAssociado VARCHAR(50) NOT NULL,
-cpf VARCHAR(11) NOT NULL,
-CONSTRAINT PRIMARY KEY (idAssociado)
-);
-
-CREATE TABLE enderecos(
-idEndereco INT AUTO_INCREMENT NOT NULL,
-logradouro VARCHAR(50) NOT NULL,
-cidade VARCHAR(50) NOT NULL,
-UF CHAR(2) NOT NULL,
-numero VARCHAR(4) NOT NULL,
-complemento VARCHAR(10) NULL,
-bairro VARCHAR(30),
-cep CHAR(8) NOT NULL,
-idAssociado INT NOT NULL,
-CONSTRAINT PRIMARY KEY (idEndereco),
-CONSTRAINT FK_enderecos_associados FOREIGN KEY (idAssociado)
-REFERENCES Associados(idAssociado)
-);
-
-CREATE TABLE emails(
-idEmail INT AUTO_INCREMENT NOT NULL,
-email VARCHAR(50) NOT NULL,
-idAssociado INT NOT NULL,
-CONSTRAINT PRIMARY KEY (idEmail),
-CONSTRAINT FK_emails_associados FOREIGN KEY (idAssociado)
-REFERENCES Associados(idAssociado)
-);
-
-CREATE TABLE tiposContatos(
-idTipoContato INT AUTO_INCREMENT NOT NULL,
-nomeContato VARCHAR(20),
-/*idAssociados INT NOT NULL, 
-idTiposContatos INT NOT NULL,*/
-CONSTRAINT PRIMARY KEY (idTipoContato)
-);
-
-tiposcontatos
-CREATE TABLE contatostelefonicos(
-idContatoTelefonico INT AUTO_INCREMENT NOT NULL,
-numero VARCHAR(9) NOT NULL,
-ddd CHAR(2),
-idAssociado INT NOT NULL,
-idTipoContato INT NOT NULL,
-CONSTRAINT PRIMARY KEY (idContatoTelefonico),
-CONSTRAINT fk_contatosTelefonicos_tiposContatos FOREIGN KEY (idTipoContato)
-REFERENCES tiposContatos (idTipoContato),
-CONSTRAINT fk_contatosTelefonicos_associados FOREIGN KEY (idAssociado)
-REFERENCES Associados (idAssociado)
-);
-
-CREATE TABLE funcionarios (
-idFuncionario INT AUTO_INCREMENT NOT NULL,
+CREATE TABLE funcionarios(
+IdFuncionario INT AUTO_INCREMENT  NOT NULL,
 nomeFuncionario VARCHAR(50) NOT NULL,
 loginFuncionario VARCHAR(50) NOT NULL,
-senhaFuncionario VARCHAR(50) NOT NULL,
+senhaFuncionario CHAR(8) NOT NULL,
 CONSTRAINT PRIMARY KEY (idFuncionario)
-);
-
-CREATE TABLE EmprestimosLivros(
-idEmprestimo INT NOT NULL,
-idLivros INT NOT NULL,
-dataDevolucaoEfetiva DATETIME NOT NULL,
-CONSTRAINT pk_EmprestimosLivros PRIMARY KEY (idEmprestimo, idLivros),
-CONSTRAINT fk_EmprestimosLivros_Emprestimo FOREIGN KEY (idEmprestimo) 
-REFERENCES emprestimos(idEmprestimo),
-CONSTRAINT fk_EmprestimosLivros_Livros FOREIGN KEY (idLivros) 
-REFERENCES livros(idLivros)
 );
 
 CREATE TABLE emprestimos(
 idEmprestimo INT AUTO_INCREMENT NOT NULL,
-dataRetirada DATE NOT NULL,
-dataPrazo DATE NOT NULL,
-idFuncionario INT NOT NULL, /* COLUNA QUE ARMANEZA A CHAVE*/
+Retirada DATETIME NOT NULL,
+Devolucao DATETIME NOT NULL, 
+dataDevolucaoEfetiva DATETIME NOT NULL,
+idFuncionario INT NOT NULL,
 idAssociado INT NOT NULL, 
 CONSTRAINT PRIMARY KEY (IdEmprestimo),
-CONSTRAINT pk_emprestimos_funcionarios FOREIGN KEY (idFuncionario) REFERENCES funcionarios (idFuncionario),
-CONSTRAINT pk_emprestimo_associado FOREIGN KEY (idAssociado) REFERENCES associados(idAssociado)
+CONSTRAINT pk_emprestimos_funcionarios FOREIGN KEY (idFuncionario)
+REFERENCES funcionarios (idFuncionario),
+CONSTRAINT pk_emprestimo_associado FOREIGN KEY (idAssociado)
+REFERENCES associados (idAssociado)
 );
 
 CREATE TABLE multas(
-idMulta INT NOT NULL AUTO_INCREMENT,
-statusMulta BOOLEAN NOT NULL, 
+idMulta INT NOT NULL AUTO_INCREMENT, 
 valor FLOAT(6,2) NOT NULL,
+statusMultas BOOLEAN NOT NULL,
 dataPagamento DATETIME,
+idEmprestimo INT NOT NULL, 
+idLivro INT NOT NULL, 
+CONSTRAINT PRIMARY KEY (idMulta), 
+CONSTRAINT fk_multas_emprestimos FOREIGN KEY (idEmprestimo)
+REFERENCES Emprestimos(idEmprestimo), 
+CONSTRAINT fk_multas_livros FOREIGN KEY (idLivro) 
+REFERENCES Livros(idLivro)
+);
+
+CREATE TABLE EmprestimosLivros (
 idEmprestimo INT NOT NULL,
-idLivros INT NOT NULL,
-CONSTRAINT PRIMARY KEY (idMulta),
-CONSTRAINT fk_Multas_emprestimo_EmprestimosLivros FOREIGN KEY (idEmprestimo)
-REFERENCES EmprestimosLivros(idEmprestimo),
-CONSTRAINT fk_Multas_livros_EmprestimosLivros FOREIGN KEY (idLivros)
-REFERENCES EmprestimosLivros(idLivros)
-);
-
-CREATE TABLE Genero(
-idGenero INT NOT NULL AUTO_INCREMENT,
-nome VARCHAR(20),
-CONSTRAINT PRIMARY KEY (idGenero)
-);
-SELECT * FROM Genero
-
-
-CREATE TABLE livrosGeneros (
-
-idGenero INT NOT NULL,
-
 idLivro INT NOT NULL,
-
-CONSTRAINT pk_LivrosGeneros PRIMARY KEY (idGenero, idLivro),
-
-CONSTRAINT fk_LivrosGeneros_Generos FOREIGN KEY (idGenero) 
-
-REFERENCES Genero(idGenero),
-
-CONSTRAINT fk_LivrosGeneros_Livros FOREIGN KEY (idLivro) 
-
-REFERENCES livros(idLivros)
-
+dataDevolucaoEfetiva DATETIME NOT NULL,
+CONSTRAINT pk_EmprestimosLivros PRIMARY KEY (idEmprestimo, idLivro),
+CONSTRAINT fk_EmprestimosLivros_Emprestimo FOREIGN KEY (idEmprestimo) 
+REFERENCES emprestimos(idEmprestimo),
+CONSTRAINT fk_EmprestimosLivros_Livros FOREIGN KEY (idLivro) 
+REFERENCES livros(idLivro)
 );
 
-SHOW TABLES 
-
-
-
-
-
-
+ALTER TABLE emprestimos DROP COLUMN dataDevolucaoEfetiva;
